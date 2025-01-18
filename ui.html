@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 11px;
+      background: #2C2C2C;
+    }
+
+    /* UI Container */
+    .ui-container {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      background: #2C2C2C;
+    }
+
+    /* Search */
+    .search-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      align-self: stretch;
+      max-height: 40px;
+      background: #2C2C2C;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 8px 16px;
+      border: none;
+      background: #2C2C2C;
+      border-radius: 6px;
+      color: #545454;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 420;
+      line-height: 24px;
+      letter-spacing: -0.12px;
+      outline: none;
+    }
+
+    .search-input::placeholder {
+      color: #545454;
+      opacity: 0.7;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      overflow-y: auto;
+      background: #2C2C2C;
+    }
+
+    /* Section */
+    .section-wrapper {
+      margin-bottom: 16px;
+    }
+
+    .section-header {
+      display: flex;
+      padding: 10px 16px;
+      align-items: center;
+      gap: 8px;
+      align-self: stretch;
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-style: italic;
+      font-weight: 500;
+      line-height: 24px;
+      letter-spacing: 0.1px;
+    }
+
+    .section-header::before {
+      content: "// ";
+    }
+
+    .section-header.amounts {
+      color: #B69BF1;
+    }
+
+    .section-header.customer {
+      color: #EC7021;
+    }
+
+    .section-header.business {
+      color: #AADAFA;
+    }
+
+    .section-header.retail {
+      color: #E39116;
+    }
+
+    /* Actions */
+    .action-grid {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .action-button {
+      display: flex;
+      height: 34px;
+      padding: 8px 16px;
+      align-items: center;
+      gap: 8px;
+      align-self: stretch;
+      border: none;
+      border-bottom: 0.5px solid #313135;
+      background: #2C2C2C;
+      color: #BFBFBF;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 24px;
+      letter-spacing: 0.01px;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.2s;
+    }
+
+    .action-button:hover {
+      background: #363636;
+    }
+
+    @supports (color: color(display-p3 0 0 0)) {
+      .section-header.amounts {
+        color: color(display-p3 0.7137 0.6078 0.9451);
+      }
+
+      .section-header.customer {
+        color: color(display-p3 0.9255 0.4392 0.1294);
+      }
+
+      .section-header.business {
+        color: color(display-p3 0.6667 0.8549 0.9804);
+      }
+
+      .section-header.retail {
+        color: color(display-p3 0.8902 0.5686 0.0863);
+      }
+
+      .search-input {
+        color: color(display-p3 0.3294 0.3294 0.3294);
+      }
+
+      .search-input::placeholder {
+        color: color(display-p3 0.3294 0.3294 0.3294);
+        opacity: 0.7;
+      }
+      
+      .action-button {
+        border-bottom-color: color(display-p3 0.1922 0.1922 0.2078);
+        background: color(display-p3 0.1725 0.1725 0.1725);
+        color: color(display-p3 0.749 0.749 0.749);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="ui-container">
+    <!-- Search -->
+    <div class="search-wrapper">
+      <input type="text" class="search-input" placeholder="Find any content" onkeyup="filterContent(this.value)">
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Amounts Section -->
+      <div class="section-wrapper">
+        <div class="section-header amounts">Amounts</div>
+        <div class="action-grid">
+          <button class="action-button" onclick="generate('small')">Small Amount</button>
+          <button class="action-button" onclick="generate('medium')">Medium Amount</button>
+          <button class="action-button" onclick="generate('large')">Large Amount</button>
+          <button class="action-button" onclick="generate('psychological')">Psychological Pricing</button>
+          <button class="action-button" onclick="generate('round')">Round Numbers</button>
+          <button class="action-button" onclick="generate('abbreviated')">Abbreviated Format</button>
+          <button class="action-button" onclick="generate('words')">Words Format</button>
+        </div>
+      </div>
+
+      <!-- Customer Section -->
+      <div class="section-wrapper">
+        <div class="section-header customer">Customer</div>
+        <div class="action-grid">
+          <button class="action-button" onclick="generate('fullName')">Full Name</button>
+          <button class="action-button" onclick="generate('firstName')">First Name</button>
+          <button class="action-button" onclick="generate('lastName')">Last Name</button>
+          <button class="action-button" onclick="generate('prefix')">Prefix</button>
+          <button class="action-button" onclick="generate('suffix')">Suffix</button>
+          <button class="action-button" onclick="generate('jobTitle')">Job Title</button>
+          <button class="action-button" onclick="generate('jobDescription')">Job Description</button>
+          <button class="action-button" onclick="generate('jobArea')">Job Area</button>
+          <button class="action-button" onclick="generate('jobType')">Job Type</button>
+          <button class="action-button" onclick="generate('socialHandle')">Social Media Handle</button>
+          <button class="action-button" onclick="generate('email')">Email</button>
+          <button class="action-button" onclick="generate('username')">Username</button>
+          <button class="action-button" onclick="generate('password')">Password</button>
+          <button class="action-button" onclick="generate('url')">URL</button>
+          <button class="action-button" onclick="generate('domain')">Domain Name</button>
+        </div>
+      </div>
+
+      <!-- Business Section -->
+      <div class="section-wrapper">
+        <div class="section-header business">Business</div>
+        <div class="action-grid">
+          <button class="action-button" onclick="generate('businessName')">Business Name</button>
+          <button class="action-button" onclick="generate('businessType')">Business Type</button>
+          <button class="action-button" onclick="generate('bankName')">Bank Name</button>
+          <button class="action-button" onclick="generate('accountNumber')">Bank Account Number</button>
+          <button class="action-button" onclick="generate('accountName')">Account Name</button>
+          <button class="action-button" onclick="generate('bankCode')">Bank Code</button>
+          <button class="action-button" onclick="generate('transactionType')">Currency Transaction Type</button>
+          <button class="action-button" onclick="generate('businessAddress')">Business Address</button>
+          <button class="action-button" onclick="generate('phoneNumber')">Phone Number</button>
+          <button class="action-button" onclick="generate('orderNumber')">Order Number</button>
+        </div>
+      </div>
+
+      <!-- Retail Section -->
+      <div class="section-wrapper">
+        <div class="section-header retail">Retail</div>
+        <div class="action-grid">
+          <button class="action-button" onclick="generate('category')">Category</button>
+          <button class="action-button" onclick="generate('productName')">Product Name</button>
+          <button class="action-button" onclick="generate('modifier')">Modifier</button>
+          <button class="action-button" onclick="generate('productVariant')">Product Variant</button>
+          <button class="action-button" onclick="generate('material')">Product Material</button>
+          <button class="action-button" onclick="generate('adjective')">Product Adjective</button>
+          <button class="action-button" onclick="generate('color')">Color</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    window.onload = () => {
+      // Initialize communication with the plugin
+      window.onmessage = async (event) => {
+        const message = event.data.pluginMessage;
+        console.log('UI received message:', message);
+      };
+    };
+
+    function generate(type) {
+      console.log('Generating content for type:', type);
+      // Send message to the plugin
+      window.parent.postMessage({ 
+        pluginMessage: { type: type }
+      }, '*');
+    }
+
+    function filterContent(query) {
+      query = query.toLowerCase();
+      const buttons = document.querySelectorAll('.action-button');
+      buttons.forEach(button => {
+        const text = button.textContent.toLowerCase();
+        button.style.display = text.includes(query) ? 'flex' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>

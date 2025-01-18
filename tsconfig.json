@@ -1,11 +1,18 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "jsx": "react",
-    "moduleResolution": "nodenext",
-    "module": "nodenext",
-    "typeRoots": ["./node_modules/@types", "./node_modules/@figma"]
+    "lib": ["es6", "dom"],
+    "module": "es6",
+    "moduleResolution": "node",
+    "strict": false,
+    "typeRoots": ["./node_modules/@figma"],
+    "outDir": "./dist",
+    "rootDir": ".",
+    "allowJs": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "jsx": "preserve"
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": [".eslintrc.js"]
+  "include": ["code.js"]
 }
