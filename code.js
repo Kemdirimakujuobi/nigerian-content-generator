@@ -23,44 +23,115 @@ const customerData = {
     'Bank Manager', 'Civil Servant', 'Software Engineer',
     'Telecommunications Expert', 'Real Estate Developer'
   ],
+  jobTypes: [
+    'Full Time', 'Part Time', 'Contract', 'Freelance',
+    'Remote', 'Hybrid', 'On-site', 'Temporary'
+  ],
   jobAreas: [
     'Lagos Island', 'Victoria Island', 'Lekki Phase 1',
     'Ikeja GRA', 'Ikoyi', 'Ajah', 'Maryland', 'Yaba'
-  ]
+  ],
+  domains: [
+    'com.ng', 'ng', 'africa', 'com', 'net',
+    'org', 'co.uk', 'io', 'tech', 'digital'
+  ],
+  emailProviders: [
+    'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com',
+    'live.com', 'aol.com', 'mail.com', 'proton.me'
+  ],
+  socialPrefixes: ['@', '_', '.', 'real_', 'iam_', 'the_', 'official_'],
+  socialSuffixes: ['_ng', '_234', '_africa', '_lagos', '_naija', '_official', '_real']
 };
 
 // Business Data
 const businessData = {
-  banks: [
-    'First Bank', 'GTBank', 'Zenith Bank', 'UBA', 'Access Bank',
-    'Fidelity Bank', 'Union Bank', 'Sterling Bank', 'Wema Bank'
+  companies: [
+    'Shoprite Nigeria Ltd', 'Dangote Group', 'MTN Nigeria', 'Globacom Limited',
+    'First Bank Nigeria', 'Jumia Nigeria', 'Nigerian Breweries Plc', 'Nestle Nigeria',
+    'Unilever Nigeria', 'PZ Cussons Nigeria', 'Cadbury Nigeria', 'Flour Mills Nigeria',
+    'Oando Plc', 'Total Nigeria', 'Shell Nigeria', 'Guinness Nigeria',
+    'Nigerian Bottling Company', 'Ebano Supermarket', 'SLOT Systems Limited',
+    'Chicken Republic', 'Mr Biggs', 'Tantalizers', 'Sweet Sensation'
   ],
-  businessTypes: [
-    'Import/Export', 'Real Estate', 'Oil & Gas', 'Fintech',
-    'Agriculture', 'Manufacturing', 'Telecommunications'
+  banks: [
+    'Access Bank', 'Zenith Bank', 'First Bank', 'UBA', 'GTBank',
+    'Union Bank', 'Fidelity Bank', 'Ecobank', 'FCMB', 'Sterling Bank',
+    'Stanbic IBTC', 'Unity Bank', 'Wema Bank', 'Heritage Bank', 'Keystone Bank',
+    'Polaris Bank', 'Standard Chartered', 'Citibank', 'Titan Trust Bank'
   ],
   bankCodes: {
-    'First Bank': '011',
-    'GTBank': '058',
+    'Access Bank': '044',
     'Zenith Bank': '057',
+    'First Bank': '011',
     'UBA': '033',
-    'Access Bank': '044'
-  }
+    'GTBank': '058',
+    'Union Bank': '032',
+    'Fidelity Bank': '070',
+    'Ecobank': '050',
+    'FCMB': '214',
+    'Sterling Bank': '232',
+    'Stanbic IBTC': '221',
+    'Unity Bank': '215',
+    'Wema Bank': '035',
+    'Heritage Bank': '030',
+    'Keystone Bank': '082',
+    'Polaris Bank': '076',
+    'Standard Chartered': '068',
+    'Citibank': '023',
+    'Titan Trust Bank': '102'
+  },
+  transactionTypes: [
+    'Cash', 'Card', 'Split Payment', 'Credit',
+    'Bank Transfer', 'USSD', 'QR Code', 'POS'
+  ],
+  phoneAreaCodes: [
+    '703', '706', '803', '806', '810', '813', '814', '816', '903', '906',
+    '705', '805', '807', '811', '815', '905', '915',
+    '701', '708', '802', '808', '812', '902', '907'
+  ]
 };
 
 // Retail Data
 const retailData = {
   categories: [
     'Traditional Wear', 'Local Fabrics', 'Food Items',
-    'African Jewelry', 'Nigerian Art', 'Home Decor'
+    'African Jewelry', 'Nigerian Art', 'Home Decor',
+    'Fashion Accessories', 'Beauty Products', 'Electronics',
+    'Kitchen Utensils', 'Handmade Crafts', 'Books'
+  ],
+  products: [
+    'Ankara Fabric', 'Adire Cloth', 'Aso Oke',
+    'Beaded Necklace', 'Waist Beads', 'Talking Drum',
+    'Mortar and Pestle', 'Palm Wine Gourd', 'Shea Butter',
+    'Black Soap', 'Leather Sandals', 'Woven Basket',
+    'Clay Pot', 'Calabash', 'Dashiki Shirt'
+  ],
+  modifiers: [
+    'Extra Spicy', 'Sugar Free', 'With Garnish',
+    'Double Portion', 'Family Size', 'Party Pack',
+    'Gift Wrapped', 'Express Delivery', 'Custom Made',
+    'Limited Edition', 'Handcrafted', 'Organic'
+  ],
+  sizes: [
+    'Small', 'Medium', 'Large', 'XL', '2XL',
+    '6 Yards', '12 Yards', '500g', '1kg',
+    'One Size', 'Regular', 'Family Size'
   ],
   materials: [
     'Ankara', 'Aso-oke', 'Adire', 'Lace',
-    'George Fabric', 'Kente', 'Batik'
+    'George Fabric', 'Kente', 'Batik',
+    'Cotton', 'Silk', 'Wool', 'Leather'
   ],
   colors: [
     'Royal Blue', 'Gold', 'Forest Green', 'Burgundy',
-    'Purple Rain', 'Sunset Orange', 'Ocean Blue'
+    'Purple Rain', 'Sunset Orange', 'Ocean Blue',
+    'Earth Brown', 'Desert Sand', 'Coral Red'
+  ],
+  adjectives: [
+    'Premium', 'Luxurious', 'Traditional', 'Authentic',
+    'Handcrafted', 'Exclusive', 'Classic', 'Elegant',
+    'Beautiful', 'Exquisite', 'Royal', 'Pristine',
+    'Custom', 'Limited Edition', 'Artisanal'
   ]
 };
 
@@ -79,56 +150,191 @@ function padKobo(kobo) {
 
 // Content Generators
 function generateCustomerContent(type) {
+  console.log('Generating customer content for type:', type);
+  
+  let result = null;
   switch (type) {
     case 'fullName':
-      return `${getRandomItem(customerData.titles)} ${getRandomItem(customerData.firstNames)} ${getRandomItem(customerData.lastNames)}`;
+      result = `${getRandomItem(customerData.titles)} ${getRandomItem(customerData.firstNames)} ${getRandomItem(customerData.lastNames)}`;
+      break;
     case 'firstName':
-      return getRandomItem(customerData.firstNames);
+      result = getRandomItem(customerData.firstNames);
+      break;
     case 'lastName':
-      return getRandomItem(customerData.lastNames);
+      result = getRandomItem(customerData.lastNames);
+      break;
     case 'prefix':
-      return getRandomItem(customerData.titles);
+      result = getRandomItem(customerData.titles);
+      break;
     case 'suffix':
-      return getRandomItem(customerData.suffixes);
+      result = getRandomItem(customerData.suffixes);
+      break;
     case 'jobTitle':
-      return getRandomItem(customerData.jobTitles);
+      result = getRandomItem(customerData.jobTitles);
+      break;
+    case 'jobType':
+      result = getRandomItem(customerData.jobTypes);
+      break;
     case 'jobArea':
-      return getRandomItem(customerData.jobAreas);
+      result = getRandomItem(customerData.jobAreas);
+      break;
+    case 'socialHandle':
+      console.log('Generating social handle...');
+      const socialName = getRandomItem(customerData.firstNames).toLowerCase();
+      const socialPrefix = getRandomItem(customerData.socialPrefixes);
+      const socialSuffix = Math.random() > 0.5 ? getRandomItem(customerData.socialSuffixes) : '';
+      result = `${socialPrefix}${socialName}${socialSuffix}`;
+      console.log('Generated social handle:', result);
+      break;
+    case 'email':
+      console.log('Generating email...');
+      const emailFirst = getRandomItem(customerData.firstNames).toLowerCase();
+      const emailLast = getRandomItem(customerData.lastNames).toLowerCase();
+      const emailProvider = getRandomItem(customerData.emailProviders);
+      const emailFormats = [
+        `${emailFirst}.${emailLast}@${emailProvider}`,
+        `${emailFirst}${emailLast}@${emailProvider}`,
+        `${emailFirst[0]}${emailLast}@${emailProvider}`,
+        `${emailFirst}${emailLast[0]}@${emailProvider}`,
+        `${emailFirst}_${emailLast}@${emailProvider}`
+      ];
+      result = getRandomItem(emailFormats);
+      console.log('Generated email:', result);
+      break;
+    case 'url':
+      console.log('Generating URL...');
+      const urlFirst = getRandomItem(customerData.firstNames).toLowerCase();
+      const urlDomain = getRandomItem(customerData.domains);
+      result = `www.${urlFirst}.${urlDomain}`;
+      console.log('Generated URL:', result);
+      break;
     default:
+      console.log('Unknown type:', type);
       return null;
   }
+  
+  console.log('Generated result:', result);
+  return result;
 }
 
 function generateBusinessContent(type) {
-  switch (type) {
-    case 'businessName':
-      return `Nigerian ${getRandomItem(businessData.businessTypes)} Limited`;
-    case 'businessType':
-      return getRandomItem(businessData.businessTypes);
-    case 'bankName':
-      return getRandomItem(businessData.banks);
-    case 'accountNumber':
-      return Math.floor(Math.random() * 9000000000 + 1000000000).toString();
-    case 'bankCode':
-      const bank = getRandomItem(businessData.banks);
-      return businessData.bankCodes[bank] || '044';
-    default:
-      return null;
+  console.log('Generating business content for type:', type);
+  
+  try {
+    let result = null;
+    
+    switch (type) {
+      case 'businessName':
+        result = getRandomItem(businessData.companies);
+        break;
+        
+      case 'bankName':
+        result = getRandomItem(businessData.banks);
+        break;
+        
+      case 'accountNumber':
+        // Generate 10-digit account number
+        const accNum = Math.floor(Math.random() * 9000000000 + 1000000000);
+        result = accNum.toString();
+        break;
+        
+      case 'bankCode':
+        const selectedBank = getRandomItem(businessData.banks);
+        result = businessData.bankCodes[selectedBank] || '000';
+        break;
+        
+      case 'transactionType':
+        result = getRandomItem(businessData.transactionTypes);
+        break;
+        
+      case 'phoneNumber':
+        const areaCode = getRandomItem(businessData.phoneAreaCodes);
+        const subscriberNumber = Math.floor(Math.random() * 10000000)
+          .toString()
+          .padStart(7, '0');
+        result = `+234${areaCode}${subscriberNumber}`;
+        break;
+        
+      case 'phonePrefix':
+        result = '+234';
+        break;
+        
+      case 'orderNumber':
+        // Generate 6-digit order number with # prefix
+        const orderNum = Math.floor(Math.random() * 900000 + 100000);
+        result = `#${orderNum}`;
+        break;
+        
+      default:
+        console.log('Unknown business type:', type);
+        return null;
+    }
+    
+    console.log('Generated business result:', result);
+    return result;
+    
+  } catch (error) {
+    console.error('Error generating business content:', error);
+    return null;
   }
 }
 
 function generateRetailContent(type) {
-  switch (type) {
-    case 'category':
-      return getRandomItem(retailData.categories);
-    case 'productName':
-      return `Premium ${getRandomItem(retailData.categories)}`;
-    case 'material':
-      return getRandomItem(retailData.materials);
-    case 'color':
-      return getRandomItem(retailData.colors);
-    default:
-      return null;
+  console.log('Generating retail content for type:', type);
+  
+  try {
+    let result = null;
+    
+    switch (type) {
+      case 'category':
+        result = getRandomItem(retailData.categories);
+        break;
+        
+      case 'productName':
+        const product = getRandomItem(retailData.products);
+        // 30% chance to add an adjective
+        if (Math.random() < 0.3) {
+          const adj = getRandomItem(retailData.adjectives);
+          result = `${adj} ${product}`;
+        } else {
+          result = product;
+        }
+        break;
+        
+      case 'modifier':
+        result = getRandomItem(retailData.modifiers);
+        break;
+        
+      case 'productVariant':
+        const variantProduct = getRandomItem(retailData.products);
+        const color = getRandomItem(retailData.colors);
+        const size = getRandomItem(retailData.sizes);
+        result = `${variantProduct} / ${color} / ${size}`;
+        break;
+        
+      case 'material':
+        result = getRandomItem(retailData.materials);
+        break;
+        
+      case 'adjective':
+        result = getRandomItem(retailData.adjectives);
+        break;
+        
+      case 'color':
+        result = getRandomItem(retailData.colors);
+        break;
+        
+      default:
+        console.log('Unknown retail type:', type);
+        return null;
+    }
+    
+    console.log('Generated retail result:', result);
+    return result;
+    
+  } catch (error) {
+    console.error('Error generating retail content:', error);
+    return null;
   }
 }
 
@@ -216,6 +422,7 @@ figma.ui.onmessage = async (msg) => {
     }
 
     const type = msg.type;
+    console.log('Processing type:', type);
 
     // Check if any text layers are selected
     const textNodes = figma.currentPage.selection.filter(node => node.type === "TEXT");
@@ -231,19 +438,19 @@ figma.ui.onmessage = async (msg) => {
     console.log('Trying content generators for type:', type);
 
     // Customer content
-    if (type.includes('Name') || type.includes('prefix') || type.includes('suffix') || type.includes('job')) {
+    if (type.match(/^(fullName|firstName|lastName|prefix|suffix|job|social|email|url)$/)) {
       console.log('Attempting to generate customer content');
       content = generateCustomerContent(type);
       console.log('Generated customer content:', content);
     } 
     // Business content
-    else if (type.includes('business') || type.includes('bank') || type.includes('account')) {
+    else if (type.match(/^(businessName|bankName|accountNumber|bankCode|transactionType|phoneNumber|phonePrefix|orderNumber)$/)) {
       console.log('Attempting to generate business content');
       content = generateBusinessContent(type);
       console.log('Generated business content:', content);
     } 
     // Retail content
-    else if (type.includes('product') || type.includes('category') || type.includes('material') || type.includes('color')) {
+    else if (type.match(/^(category|productName|modifier|productVariant|material|adjective|color)$/)) {
       console.log('Attempting to generate retail content');
       content = generateRetailContent(type);
       console.log('Generated retail content:', content);
