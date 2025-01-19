@@ -26,33 +26,24 @@
 
     /* Search */
     .search-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      align-self: stretch;
-      max-height: 40px;
-      background: #2C2C2C;
+      position: sticky;
+      top: 0;
+      background: var(--figma-color-bg);
+      z-index: 100;
+      border-bottom: 1px solid var(--figma-color-border);
     }
 
     .search-input {
       width: 100%;
-      padding: 8px 16px;
+      background: transparent;
       border: none;
-      background: #2C2C2C;
-      border-radius: 6px;
-      color: #545454;
-      font-family: 'Inter', sans-serif;
+      color: #ffffff;
       font-size: 12px;
-      font-style: normal;
-      font-weight: 420;
-      line-height: 24px;
-      letter-spacing: -0.12px;
       outline: none;
     }
 
     .search-input::placeholder {
-      color: #545454;
-      opacity: 0.7;
+      color: var(--figma-color-text-tertiary);
     }
 
     /* Main Content */
@@ -85,20 +76,24 @@
       content: "// ";
     }
 
-    .section-header.amounts {
+    .section-header.amount {
       color: #B69BF1;
-    }
-
-    .section-header.customer {
-      color: #EC7021;
-    }
-
-    .section-header.business {
-      color: #AADAFA;
     }
 
     .section-header.retail {
       color: #E39116;
+    }
+
+    .section-header.address {
+      color: #AADAFA;
+    }
+
+    .section-header.date {
+      color: #EC7021;
+    }
+
+    .section-header.content {
+      color: #B69BF1;
     }
 
     /* Actions */
@@ -133,21 +128,52 @@
       background: #363636;
     }
 
+    .recent-items {
+      display: flex;
+      gap: 8px;
+      padding: 8px 0;
+      overflow-x: auto;
+      margin-top: 8px;
+    }
+
+    .recent-item {
+      padding: 4px 8px;
+      background: var(--figma-color-bg-secondary);
+      border-radius: 4px;
+      font-size: 11px;
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .recent-item:hover {
+      background: var(--figma-color-bg-hover);
+    }
+
+    .no-results {
+      padding: 16px;
+      text-align: center;
+      color: var(--figma-color-text-tertiary);
+    }
+
     @supports (color: color(display-p3 0 0 0)) {
-      .section-header.amounts {
+      .section-header.amount {
         color: color(display-p3 0.7137 0.6078 0.9451);
-      }
-
-      .section-header.customer {
-        color: color(display-p3 0.9255 0.4392 0.1294);
-      }
-
-      .section-header.business {
-        color: color(display-p3 0.6667 0.8549 0.9804);
       }
 
       .section-header.retail {
         color: color(display-p3 0.8902 0.5686 0.0863);
+      }
+
+      .section-header.address {
+        color: color(display-p3 0.6667 0.8549 0.9804);
+      }
+
+      .section-header.date {
+        color: color(display-p3 0.9255 0.4392 0.1294);
+      }
+
+      .section-header.content {
+        color: color(display-p3 0.7137 0.6078 0.9451);
       }
 
       .search-input {
@@ -169,16 +195,17 @@
 </head>
 <body>
   <div class="ui-container">
-    <!-- Search -->
+    <!-- Search section temporarily hidden
     <div class="search-wrapper">
-      <input type="text" class="search-input" placeholder="Find any content" onkeyup="filterContent(this.value)">
+      <input type="text" class="search-input" placeholder="Search content" oninput="handleSearch(event)">
+      <div class="recent-items" id="recentItems">
+      </div>
     </div>
-
-    <!-- Main Content -->
-    <div class="main-content">
-      <!-- Amounts Section -->
+    -->
+    <div id="contentSections">
+      <!-- Amount Section -->
       <div class="section-wrapper">
-        <div class="section-header amounts">Amounts</div>
+        <div class="section-header amount">Amount</div>
         <div class="action-grid">
           <button class="action-button" onclick="generate('small')">Small Amount</button>
           <button class="action-button" onclick="generate('medium')">Medium Amount</button>
@@ -186,40 +213,8 @@
           <button class="action-button" onclick="generate('psychological')">Psychological Pricing</button>
           <button class="action-button" onclick="generate('round')">Round Numbers</button>
           <button class="action-button" onclick="generate('abbreviated')">Abbreviated Format</button>
-          <button class="action-button" onclick="generate('words')">Words Format</button>
-        </div>
-      </div>
-
-      <!-- Customer Section -->
-      <div class="section-wrapper">
-        <div class="section-header customer">Customer</div>
-        <div class="action-grid">
-          <button class="action-button" onclick="generate('fullName')">Full Name</button>
-          <button class="action-button" onclick="generate('firstName')">First Name</button>
-          <button class="action-button" onclick="generate('lastName')">Last Name</button>
-          <button class="action-button" onclick="generate('prefix')">Prefix</button>
-          <button class="action-button" onclick="generate('suffix')">Suffix</button>
-          <button class="action-button" onclick="generate('jobTitle')">Job Title</button>
-          <button class="action-button" onclick="generate('jobType')">Job Type</button>
-          <button class="action-button" onclick="generate('jobArea')">Job Area</button>
-          <button class="action-button" onclick="generate('socialHandle')">Social Media Handle</button>
-          <button class="action-button" onclick="generate('email')">Email</button>
-          <button class="action-button" onclick="generate('url')">URL</button>
-        </div>
-      </div>
-
-      <!-- Business Section -->
-      <div class="section-wrapper">
-        <div class="section-header business">Business</div>
-        <div class="action-grid">
-          <button class="action-button" onclick="generate('businessName')">Business Name</button>
-          <button class="action-button" onclick="generate('bankName')">Bank Name</button>
-          <button class="action-button" onclick="generate('accountNumber')">Account Number</button>
-          <button class="action-button" onclick="generate('bankCode')">Bank Code</button>
-          <button class="action-button" onclick="generate('transactionType')">Transaction Type</button>
-          <button class="action-button" onclick="generate('phoneNumber')">Phone Number</button>
-          <button class="action-button" onclick="generate('phonePrefix')">Phone Prefix</button>
-          <button class="action-button" onclick="generate('orderNumber')">Order Number</button>
+          <button class="action-button" onclick="generate('words')">Amount in Words</button>
+          <button class="action-button" onclick="generate('amountRange')">Amount Range</button>
         </div>
       </div>
 
@@ -234,36 +229,107 @@
           <button class="action-button" onclick="generate('material')">Material</button>
           <button class="action-button" onclick="generate('adjective')">Product Adjective</button>
           <button class="action-button" onclick="generate('color')">Color</button>
+          <button class="action-button" onclick="generate('retailUnit')">Unit</button>
+          <button class="action-button" onclick="generate('sku')">SKU</button>
+        </div>
+      </div>
+
+      <!-- Address Section -->
+      <div class="section-wrapper">
+        <div class="section-header address">Address</div>
+        <div class="action-grid">
+          <button class="action-button" onclick="generate('city')">City</button>
+          <button class="action-button" onclick="generate('state')">State</button>
+          <button class="action-button" onclick="generate('lga')">LGA</button>
+          <button class="action-button" onclick="generate('street')">Street</button>
+          <button class="action-button" onclick="generate('fullAddress')">Full Address</button>
+          <button class="action-button" onclick="generate('africanCountry')">African Country</button>
+          <button class="action-button" onclick="generate('country')">Country</button>
+        </div>
+      </div>
+
+      <!-- Date Section -->
+      <div class="section-wrapper">
+        <div class="section-header date">Date</div>
+        <div class="action-grid">
+          <button class="action-button" onclick="generate('date')">Date</button>
+          <button class="action-button" onclick="generate('dateTime')">Date + Time</button>
+          <button class="action-button" onclick="generate('dayOfWeek')">Day of Week</button>
+          <button class="action-button" onclick="generate('month')">Month</button>
+          <button class="action-button" onclick="generate('year')">Year</button>
+        </div>
+      </div>
+
+      <!-- Nigerian Content Section -->
+      <div class="section-wrapper">
+        <div class="section-header content">Nigerian Content</div>
+        <div class="action-grid">
+          <button class="action-button" onclick="generate('nigerianWord')">Single Nigerian Word</button>
+          <button class="action-button" onclick="generate('nigerianWords')">Multiple Nigerian Words</button>
+          <button class="action-button" onclick="generate('proverb')">Single Line Proverb</button>
+          <button class="action-button" onclick="generate('multiLineProverb')">Multiple Line Proverbs</button>
         </div>
       </div>
     </div>
   </div>
 
   <script>
-    window.onload = () => {
-      // Initialize communication with the plugin
-      window.onmessage = async (event) => {
-        const message = event.data.pluginMessage;
-        console.log('UI received message:', message);
-      };
-    };
-
     function generate(type) {
-      console.log('Generating content for type:', type);
-      // Send message to the plugin
-      window.parent.postMessage({ 
-        pluginMessage: { type: type }
-      }, '*');
+      parent.postMessage({ pluginMessage: { type } }, '*');
     }
 
-    function filterContent(query) {
-      query = query.toLowerCase();
-      const buttons = document.querySelectorAll('.action-button');
-      buttons.forEach(button => {
-        const text = button.textContent.toLowerCase();
-        button.style.display = text.includes(query) ? 'flex' : 'none';
+    function handleSearch(event) {
+      const query = event.target.value.toLowerCase();
+      const sections = document.querySelectorAll('.section-wrapper');
+      let hasResults = false;
+
+      sections.forEach(section => {
+        const buttons = section.querySelectorAll('.action-button');
+        let sectionHasResults = false;
+
+        buttons.forEach(button => {
+          const text = button.textContent.toLowerCase();
+          const visible = text.includes(query);
+          button.style.display = visible ? 'flex' : 'none';
+          if (visible) sectionHasResults = true;
+        });
+
+        section.style.display = sectionHasResults ? 'block' : 'none';
+        if (sectionHasResults) hasResults = true;
+      });
+
+      // Show/hide no results message
+      const noResults = document.getElementById('noResults');
+      if (!noResults) {
+        const div = document.createElement('div');
+        div.id = 'noResults';
+        div.className = 'no-results';
+        div.textContent = 'No matching content types found';
+        document.getElementById('contentSections').appendChild(div);
+      }
+      noResults.style.display = hasResults ? 'none' : 'block';
+    }
+
+    function updateRecentItems(items) {
+      const container = document.getElementById('recentItems');
+      container.innerHTML = '';
+      
+      items.forEach(item => {
+        const button = document.createElement('div');
+        button.className = 'recent-item';
+        button.textContent = parent.getButtonLabel(item);
+        button.onclick = () => generate(item);
+        container.appendChild(button);
       });
     }
+
+    // Listen for messages from the plugin
+    window.onmessage = (event) => {
+      const msg = event.data.pluginMessage;
+      if (msg.type === 'updateRecent') {
+        updateRecentItems(msg.items);
+      }
+    };
   </script>
 </body>
 </html>

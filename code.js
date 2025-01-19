@@ -135,18 +135,153 @@ const retailData = {
   ]
 };
 
+// Amount Data
+const amountData = {
+  ranges: [
+    { min: 100, max: 999 },
+    { min: 1000, max: 9999 },
+    { min: 10000, max: 99999 },
+    { min: 100000, max: 999999 },
+    { min: 1000000, max: 9999999 }
+  ]
+};
+
+// Retail Units Data
+const retailUnitsData = {
+  units: [
+    'kg', 'g', 'mg', 'L', 'mL',
+    'cm', 'm', 'mm', 'pcs', 'dz',
+    'box', 'set', 'pack', 'bag', 'ctn'
+  ],
+  skuPrefixes: ['NGR', 'LAG', 'ABJ', 'PH', 'KD', 'IB']
+};
+
+// Address Data
+const addressData = {
+  states: [
+    'Lagos', 'Abuja', 'Rivers', 'Kano', 'Kaduna',
+    'Oyo', 'Delta', 'Ogun', 'Imo', 'Enugu'
+  ],
+  cities: {
+    'Lagos': ['Ikeja', 'Lekki', 'Victoria Island', 'Ikoyi', 'Surulere'],
+    'Abuja': ['Wuse', 'Garki', 'Maitama', 'Asokoro', 'Gwarinpa'],
+    'Rivers': ['Port Harcourt', 'Bonny', 'Eleme', 'Obio-Akpor', 'Oyigbo'],
+    'Kano': ['Kano Municipal', 'Nassarawa', 'Dala', 'Gwale', 'Tarauni']
+  },
+  lgas: {
+    'Lagos': ['Ikeja', 'Eti-Osa', 'Lagos Island', 'Surulere', 'Alimosho'],
+    'Abuja': ['AMAC', 'Bwari', 'Gwagwalada', 'Kuje', 'Kwali']
+  },
+  streets: [
+    'Broad Street', 'Marina Road', 'Allen Avenue', 'Awolowo Road', 
+    'Adeola Odeku Street', 'Ademola Adetokunbo Street', 'Kofo Abayomi Street'
+  ],
+  africanCountries: [
+    'Nigeria', 'Ghana', 'Kenya', 'South Africa', 'Egypt',
+    'Ethiopia', 'Tanzania', 'Uganda', 'Rwanda', 'Senegal'
+  ]
+};
+
+// Nigerian Content Data
+const nigerianContentData = {
+  words: [
+    'Oga', 'Wahala', 'Oyinbo', 'Abeg', 'Wetin',
+    'Naija', 'Jollof', 'Amebo', 'Shakara', 'Gbese'
+  ],
+  proverbs: [
+    'A child who washes his hands can dine with elders.',
+    'When the right hand washes the left hand, the right hand becomes clean also.',
+    'The same sun that melts wax hardens clay.',
+    'A wise person will always find a way.',
+    'What an elder sees sitting down, a youth cannot see standing up.'
+  ],
+  multiLineProverbs: [
+    'The death that killed the dog\nis the same death that will kill the fox.',
+    'When the mouse laughs at the cat\nthere is a hole nearby.',
+    'A child who asks questions\ndoes not become a fool.',
+    'The river that forgets its source\nwill dry up.',
+    'When two elephants fight\nthe grass suffers.'
+  ]
+};
+
 // Utility functions
 function getRandomItem(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 
 function formatWithCommas(num) {
-  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 function padKobo(kobo) {
-  return kobo.toString().padStart(2, '0');
+    return kobo.toString().padStart(2, '0');
 }
+
+// Amount generators
+const amountGenerators = {
+    // Regular amounts with kobo
+    standard: () => {
+        const naira = Math.floor(Math.random() * 9999900) + 100;
+        const kobo = Math.floor(Math.random() * 100);
+        return `₦ ${formatWithCommas(naira)}.${padKobo(kobo)}`;
+    },
+    // Small amounts (₦100 - ₦9,999)
+    small: () => {
+        const naira = Math.floor(Math.random() * 9900) + 100;
+        const kobo = Math.floor(Math.random() * 100);
+        return `₦ ${formatWithCommas(naira)}.${padKobo(kobo)}`;
+    },
+    // Medium amounts (₦10,000 - ₦99,999)
+    medium: () => {
+        const naira = Math.floor(Math.random() * 90000) + 10000;
+        const kobo = Math.floor(Math.random() * 100);
+        return `₦ ${formatWithCommas(naira)}.${padKobo(kobo)}`;
+    },
+    // Large amounts (₦100,000 - ₦10,000,000)
+    large: () => {
+        const naira = Math.floor(Math.random() * 9900000) + 100000;
+        const kobo = Math.floor(Math.random() * 100);
+        return `₦ ${formatWithCommas(naira)}.${padKobo(kobo)}`;
+    },
+    // Psychological pricing (e.g., ₦99.99, ₦999.99)
+    psychological: () => {
+        const bases = [99, 999, 9999, 99999];
+        const base = bases[Math.floor(Math.random() * bases.length)];
+        return `₦ ${formatWithCommas(base)}.99`;
+    },
+    // Round numbers (e.g., ₦1,000.00, ₦5,000.00)
+    round: () => {
+        const bases = [1000, 2000, 5000, 10000, 20000, 50000, 100000];
+        const base = bases[Math.floor(Math.random() * bases.length)];
+        return `₦ ${formatWithCommas(base)}.00`;
+    },
+    // Abbreviated large amounts (e.g., "₦1.5M")
+    abbreviated: () => {
+        const amount = Math.floor(Math.random() * 10000000) + 100000;
+        if (amount >= 1000000) {
+            return `₦ ${(amount / 1000000).toFixed(1)}M`;
+        }
+        else if (amount >= 1000) {
+            return `₦ ${(amount / 1000).toFixed(1)}K`;
+        }
+        return `₦ ${amount}`;
+    },
+    // Word format (e.g., "One Million Five Hundred Thousand Naira Only")
+    words: () => {
+        const amount = Math.floor(Math.random() * 10000000) + 100;
+        const kobo = Math.floor(Math.random() * 100);
+        const nairaWords = numberToWords(amount);
+        const koboWords = numberToWords(kobo);
+        return `${nairaWords} Naira${kobo > 0 ? ` and ${koboWords} Kobo` : ''} Only`;
+    },
+    // Amount range (new functionality)
+    amountRange: () => {
+        const range = getRandomItem(amountData.ranges);
+        const start = Math.floor(Math.random() * (range.max - range.min + 1)) + range.min;
+        const end = Math.floor(Math.random() * (range.max - start + 1)) + start;
+        return `₦ ${formatWithCommas(start)} → ₦ ${formatWithCommas(end)}`;
+    }
+};
 
 // Content Generators
 function generateCustomerContent(type) {
@@ -338,72 +473,213 @@ function generateRetailContent(type) {
   }
 }
 
-// Amount generators
-const amountGenerators = {
-  standard: () => {
-    const naira = Math.floor(Math.random() * 9999900) + 100;
-    const kobo = Math.floor(Math.random() * 100);
-    return `₦ ${formatWithCommas(naira)}.${padKobo(kobo)}`;
-  },
-  small: () => {
-    const naira = Math.floor(Math.random() * 9900) + 100;
-    const kobo = Math.floor(Math.random() * 100);
-    return `₦ ${formatWithCommas(naira)}.${padKobo(kobo)}`;
-  },
-  medium: () => {
-    const naira = Math.floor(Math.random() * 90000) + 10000;
-    const kobo = Math.floor(Math.random() * 100);
-    return `₦ ${formatWithCommas(naira)}.${padKobo(kobo)}`;
-  },
-  large: () => {
-    const naira = Math.floor(Math.random() * 9900000) + 100000;
-    const kobo = Math.floor(Math.random() * 100);
-    return `₦ ${formatWithCommas(naira)}.${padKobo(kobo)}`;
-  },
-  psychological: () => {
-    const naira = Math.floor(Math.random() * 9000) + 1000;
-    return `₦ ${formatWithCommas(naira - 1)}.99`;
-  },
-  round: () => {
-    const naira = (Math.floor(Math.random() * 10) + 1) * 1000;
-    return `₦ ${formatWithCommas(naira)}.00`;
-  },
-  abbreviated: () => {
-    const amount = Math.floor(Math.random() * 10000000) + 1000000;
-    if (amount >= 1000000) {
-      return `₦ ${(amount / 1000000).toFixed(1)}M`;
-    }
-    return `₦ ${amount}`;
-  },
-  words: () => {
-    const amount = Math.floor(Math.random() * 10000000) + 100;
-    return numberToWords(amount) + ' Naira';
+function generateAmountRange() {
+  const range = getRandomItem(amountData.ranges);
+  const start = Math.floor(Math.random() * (range.max - range.min + 1)) + range.min;
+  const end = Math.floor(Math.random() * (range.max - start + 1)) + start;
+  return `₦ ${formatWithCommas(start)} → ₦ ${formatWithCommas(end)}`;
+}
+
+function generateSKU() {
+  const skuPrefix = getRandomItem(retailUnitsData.skuPrefixes);
+  const skuNumber = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+  return `${skuPrefix}${skuNumber}`;
+}
+
+function generateRetailUnit() {
+  const amount = Math.floor(Math.random() * 99999) + 1;
+  const unit = getRandomItem(retailUnitsData.units);
+  return `${amount}${unit}`;
+}
+
+// Address Generators
+function generateAddress(type) {
+  switch (type) {
+    case 'city':
+      const state = getRandomItem(addressData.states);
+      return getRandomItem(addressData.cities[state]);
+    case 'state':
+      return getRandomItem(addressData.states);
+    case 'lga':
+      const lgaState = getRandomItem(addressData.states);
+      return getRandomItem(addressData.lgas[lgaState] || ['Central']);
+    case 'street':
+      return getRandomItem(addressData.streets);
+    case 'fullAddress':
+      const fullState = getRandomItem(addressData.states);
+      const city = getRandomItem(addressData.cities[fullState]);
+      const street = getRandomItem(addressData.streets);
+      return `${street}, ${city}, ${fullState}, Nigeria`;
+    case 'africanCountry':
+      return getRandomItem(addressData.africanCountries);
+    case 'country':
+      return 'Nigeria';
+    default:
+      return null;
   }
-};
+}
+
+function formatDate(date) {
+  const day = date.getDate().toString().padStart(2, '0');
+  const monthNames = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+  const month = monthNames[date.getMonth()];
+  const year = date.getFullYear();
+  return `${day} ${month} ${year}`;
+}
+
+function formatTime(date) {
+  let hours = date.getHours();
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // Convert 0 to 12
+  return `${hours}:${minutes} ${ampm}`;
+}
+
+function generateDate(type) {
+  const startYear = 1980;
+  const endYear = 2025;
+  const year = Math.floor(Math.random() * (endYear - startYear + 1)) + startYear;
+  const month = Math.floor(Math.random() * 12);
+  const day = Math.floor(Math.random() * 28) + 1; // Using 28 to avoid invalid dates
+  const hours = Math.floor(Math.random() * 24);
+  const minutes = Math.floor(Math.random() * 60);
+  
+  const date = new Date(year, month, day, hours, minutes);
+  
+  const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const monthNames = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+  
+  switch (type) {
+    case 'date':
+      return formatDate(date);
+    case 'dateTime':
+      return `${formatDate(date)} • ${formatTime(date)}`;
+    case 'dayOfWeek':
+      return weekDays[date.getDay()];
+    case 'month':
+      return monthNames[date.getMonth()];
+    case 'year':
+      return year.toString();
+    default:
+      return null;
+  }
+}
+
+function generateNigerianContent(type) {
+  switch (type) {
+    case 'word':
+      return getRandomItem(nigerianContentData.words);
+    case 'words':
+      const wordCount = Math.floor(Math.random() * 3) + 2;
+      return Array.from({ length: wordCount }, () => getRandomItem(nigerianContentData.words)).join(' ');
+    case 'proverb':
+      return getRandomItem(nigerianContentData.proverbs);
+    case 'multiLineProverb':
+      return getRandomItem(nigerianContentData.multiLineProverbs);
+    default:
+      return null;
+  }
+}
 
 // Convert number to words
 function numberToWords(num) {
-  const units = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
-  const teens = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
-  const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
-  const scales = ['', 'Thousand', 'Million', 'Billion'];
-
-  if (num === 0) return 'Zero';
-
-  function recurse(n) {
-    if (n < 10) return units[n];
-    if (n < 20) return teens[n - 10];
-    if (n < 100) return tens[Math.floor(n / 10)] + (n % 10 ? ' ' + units[n % 10] : '');
-    if (n < 1000) return units[Math.floor(n / 100)] + ' Hundred' + (n % 100 ? ' and ' + recurse(n % 100) : '');
-    for (let i = scales.length - 1; i > 0; i--) {
-      const scale = Math.pow(1000, i);
-      if (n >= scale) {
-        return recurse(Math.floor(n / scale)) + ' ' + scales[i] + (n % scale ? ' ' + recurse(n % scale) : '');
-      }
+    const units = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
+    const teens = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+    const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+    const scales = ['', 'Thousand', 'Million', 'Billion'];
+    if (num === 0)
+        return 'Zero';
+    function recurse(n) {
+        if (n < 10)
+            return units[n];
+        if (n < 20)
+            return teens[n - 10];
+        if (n < 100)
+            return tens[Math.floor(n / 10)] + (n % 10 ? ' ' + units[n % 10] : '');
+        if (n < 1000)
+            return units[Math.floor(n / 100)] + ' Hundred' + (n % 100 ? ' and ' + recurse(n % 100) : '');
+        for (let i = scales.length - 1; i > 0; i--) {
+            const scale = Math.pow(1000, i);
+            if (n >= scale) {
+                return recurse(Math.floor(n / scale)) + ' ' + scales[i] + (n % scale ? ' ' + recurse(n % scale) : '');
+            }
+        }
+        return '';
     }
-    return '';
+    return recurse(num);
+}
+
+// Recent items storage
+let recentItems = [];
+const MAX_RECENT_ITEMS = 3;
+
+function addToRecent(type) {
+  // Remove if already exists
+  recentItems = recentItems.filter(item => item !== type);
+  
+  // Add to front
+  recentItems.unshift(type);
+  
+  // Keep only last 3
+  if (recentItems.length > MAX_RECENT_ITEMS) {
+    recentItems.pop();
   }
-  return recurse(num);
+  
+  // Update UI
+  updateRecentItemsUI();
+}
+
+function updateRecentItemsUI() {
+  figma.ui.postMessage({
+    type: 'updateRecent',
+    items: recentItems
+  });
+}
+
+function getButtonLabel(type) {
+  const buttonMap = {
+    'small': 'Small Amount',
+    'medium': 'Medium Amount',
+    'large': 'Large Amount',
+    'psychological': 'Psychological Pricing',
+    'round': 'Round Numbers',
+    'abbreviated': 'Abbreviated Format',
+    'words': 'Amount in Words',
+    'amountRange': 'Amount Range',
+    'category': 'Category',
+    'productName': 'Product Name',
+    'modifier': 'Modifier',
+    'productVariant': 'Product Variant',
+    'material': 'Material',
+    'adjective': 'Product Adjective',
+    'color': 'Color',
+    'retailUnit': 'Unit',
+    'sku': 'SKU',
+    'city': 'City',
+    'state': 'State',
+    'lga': 'LGA',
+    'street': 'Street',
+    'fullAddress': 'Full Address',
+    'africanCountry': 'African Country',
+    'country': 'Country',
+    'date': 'Date',
+    'dateTime': 'Date + Time',
+    'dayOfWeek': 'Day of Week',
+    'month': 'Month',
+    'year': 'Year',
+    'nigerianWord': 'Single Nigerian Word',
+    'nigerianWords': 'Multiple Nigerian Words',
+    'proverb': 'Single Line Proverb',
+    'multiLineProverb': 'Multiple Line Proverbs'
+  };
+  return buttonMap[type] || type;
 }
 
 // Show UI
@@ -414,7 +690,6 @@ figma.ui.onmessage = async (msg) => {
   try {
     console.log('Plugin received message:', msg);
 
-    // Check if message is properly formatted
     if (!msg || !msg.type) {
       console.error('Invalid message format:', msg);
       figma.notify("Error: Invalid message format");
@@ -424,7 +699,6 @@ figma.ui.onmessage = async (msg) => {
     const type = msg.type;
     console.log('Processing type:', type);
 
-    // Check if any text layers are selected
     const textNodes = figma.currentPage.selection.filter(node => node.type === "TEXT");
     if (textNodes.length === 0) {
       console.log('No text layers selected');
@@ -434,56 +708,50 @@ figma.ui.onmessage = async (msg) => {
 
     let content = null;
 
-    // Try content generators first
-    console.log('Trying content generators for type:', type);
-
-    // Customer content
     if (type.match(/^(fullName|firstName|lastName|prefix|suffix|job|social|email|url)$/)) {
-      console.log('Attempting to generate customer content');
       content = generateCustomerContent(type);
-      console.log('Generated customer content:', content);
     } 
-    // Business content
     else if (type.match(/^(businessName|bankName|accountNumber|bankCode|transactionType|phoneNumber|phonePrefix|orderNumber)$/)) {
-      console.log('Attempting to generate business content');
       content = generateBusinessContent(type);
-      console.log('Generated business content:', content);
     } 
-    // Retail content
-    else if (type.match(/^(category|productName|modifier|productVariant|material|adjective|color)$/)) {
-      console.log('Attempting to generate retail content');
-      content = generateRetailContent(type);
-      console.log('Generated retail content:', content);
-    } 
-    // Amount content
+    else if (type.match(/^(category|productName|modifier|productVariant|material|adjective|color|retailUnit)$/)) {
+      content = type === 'retailUnit' ? generateRetailUnit() : generateRetailContent(type);
+    }
+    else if (type === 'amountRange') {
+      content = generateAmountRange();
+    }
+    else if (type.match(/^(city|state|lga|street|fullAddress|africanCountry|country)$/)) {
+      content = generateAddress(type);
+    }
+    else if (type.match(/^(date|dateTime|dayOfWeek|month|year)$/)) {
+      content = generateDate(type);
+    }
+    else if (type.match(/^(nigerianWord|nigerianWords|proverb|multiLineProverb)$/)) {
+      content = generateNigerianContent(type);
+    }
     else if (amountGenerators[type]) {
-      console.log('Attempting to generate amount');
       content = amountGenerators[type]();
-      console.log('Generated amount:', content);
     }
 
     if (content) {
-      console.log('Content generated successfully:', content);
-      // Load fonts and update nodes
       for (const node of textNodes) {
         try {
-          console.log('Loading font for node:', node.fontName);
           await figma.loadFontAsync(node.fontName);
           node.characters = content;
-          console.log('Updated node content');
-        } catch (fontError) {
+        }
+        catch (fontError) {
           console.error('Font loading error:', fontError);
           figma.notify("Error: Could not load font");
           continue;
         }
       }
+      // Add to recent items after successful generation
+      addToRecent(type);
       figma.notify("Content generated! 💫");
-    } else {
-      console.error('No content generated for type:', type);
-      figma.notify("Error: Could not generate content for type: " + type);
     }
-  } catch (error) {
+  }
+  catch (error) {
     console.error('Plugin error:', error);
-    figma.notify("Error: " + error.message);
+    figma.notify("Error: Could not generate content");
   }
 };
