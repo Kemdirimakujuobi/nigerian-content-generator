@@ -96,6 +96,14 @@
       color: #B69BF1;
     }
 
+    .section-header.customer {
+      color: #4CAF50;
+    }
+
+    .section-header.business {
+      color: #FF9800;
+    }
+
     /* Actions */
     .action-grid {
       display: flex;
@@ -174,6 +182,14 @@
 
       .section-header.content {
         color: color(display-p3 0.7137 0.6078 0.9451);
+      }
+
+      .section-header.customer {
+        color: color(display-p3 0.2824 0.7333 0.2824);
+      }
+
+      .section-header.business {
+        color: color(display-p3 1 0.6471 0);
       }
 
       .search-input {
@@ -257,6 +273,37 @@
           <button class="action-button" onclick="generate('dayOfWeek')">Day of Week</button>
           <button class="action-button" onclick="generate('month')">Month</button>
           <button class="action-button" onclick="generate('year')">Year</button>
+        </div>
+      </div>
+
+      <!-- Customer Section -->
+      <div class="section-wrapper">
+        <div class="section-header customer">Customer</div>
+        <div class="action-grid">
+          <button class="action-button" onclick="generate('fullName')">Full Name</button>
+          <button class="action-button" onclick="generate('firstName')">First Name</button>
+          <button class="action-button" onclick="generate('lastName')">Last Name</button>
+          <button class="action-button" onclick="generate('prefix')">Title/Prefix</button>
+          <button class="action-button" onclick="generate('suffix')">Suffix</button>
+          <button class="action-button" onclick="generate('jobTitle')">Job Title</button>
+          <button class="action-button" onclick="generate('jobArea')">Job Area</button>
+          <button class="action-button" onclick="generate('email')">Email</button>
+          <button class="action-button" onclick="generate('socialHandle')">Social Handle</button>
+        </div>
+      </div>
+
+      <!-- Business Section -->
+      <div class="section-wrapper">
+        <div class="section-header business">Business</div>
+        <div class="action-grid">
+          <button class="action-button" onclick="generate('bankName')">Bank Name</button>
+          <button class="action-button" onclick="generate('businessType')">Business Type</button>
+          <button class="action-button" onclick="generate('businessName')">Business Name</button>
+          <button class="action-button" onclick="generate('accountNumber')">Account Number</button>
+          <button class="action-button" onclick="generate('bankCode')">Bank Code</button>
+          <button class="action-button" onclick="generate('orderNumber')">Order Number</button>
+          <button class="action-button" onclick="generate('paymentType')">Payment Type</button>
+          <button class="action-button" onclick="generate('website')">Website</button>
         </div>
       </div>
 

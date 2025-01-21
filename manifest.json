@@ -1,8 +1,8 @@
 {
   "name": "Nigerian Content Generator",
-  "id": "1234567890",
+  "id": "1462986861833266516",
   "api": "1.0.0",
-  "main": "dist/code.js",
+  "main": "code.js",
   "ui": "ui.html",
   "editorType": ["figma"],
   "networkAccess": {
@@ -16,5 +16,6 @@
       "name": "Nigerian Content Generator",
       "multipleSelection": true
     }
-  ]
+  ],
+  "documentAccess": "dynamic-page"
 }
