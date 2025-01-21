@@ -1,6 +1,6 @@
 {
   "name": "Nigerian Content Generator",
-  "id": "1462986861833266516",
+  "id": "1463491077245433370",
   "api": "1.0.0",
   "main": "code.js",
   "ui": "ui.html",
@@ -17,5 +17,6 @@
       "multipleSelection": true
     }
   ],
-  "documentAccess": "dynamic-page"
+  "documentAccess": "dynamic-page",
+  "enableProposedApi": false
 }
